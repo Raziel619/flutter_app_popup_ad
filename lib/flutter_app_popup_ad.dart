@@ -2,8 +2,23 @@ library flutter_app_popup_ad;
 
 import 'models/app_info.dart';
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
+class FlutterAppPopupAd {
+  static List<AppInfo> apps = [];
+
+  static Future<void> initialize({String? url, List<AppInfo>? apps}) async {
+    if(url != null){
+
+    }
+
+    if(apps != null){
+
+    }
+
+    // save apps to local storage
+  }
+
+  static void determineAndShowAd(){
+
+  }
+
 }

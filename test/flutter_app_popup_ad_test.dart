@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:app_popup_ad/app_popup_ad.dart';
+import 'package:flutter_app_popup_ad/flutter_app_popup_ad.dart';
 
 void main() {
   test('adds one to input values', () {

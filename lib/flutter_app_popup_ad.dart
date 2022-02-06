@@ -1,4 +1,6 @@
-library app_popup_ad;
+library flutter_app_popup_ad;
+
+import 'models/app_info.dart';
 
 /// A Calculator.
 class Calculator {

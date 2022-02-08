@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_popup_ad/flutter_app_popup_ad.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState(){
+    super.initState();
+    var flutterAppPopupAd = FlutterAppPopupAd();
+    flutterAppPopupAd.thisAppId = "id";
+    flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
+
+  }
 
   // This widget is the root of your application.
   @override

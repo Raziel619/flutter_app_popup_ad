@@ -14,14 +14,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  @override
-  void initState(){
-    super.initState();
-    var flutterAppPopupAd = FlutterAppPopupAd();
-    flutterAppPopupAd.thisAppId = "id";
-    flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
-
-  }
 
   // This widget is the root of your application.
   @override
@@ -65,6 +57,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  var flutterAppPopupAd = FlutterAppPopupAd();
+
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+
+      flutterAppPopupAd.thisAppId = "id";
+      flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
+      flutterAppPopupAd.determineAndShowAd(context);
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -74,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      flutterAppPopupAd.determineAndShowAd(context);
     });
   }
 

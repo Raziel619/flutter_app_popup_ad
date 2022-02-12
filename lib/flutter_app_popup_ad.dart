@@ -5,6 +5,7 @@ library flutter_app_popup_ad;
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,31 +68,42 @@ class FlutterAppPopupAd {
   //endregion
 
   Future<void> determineAndShowAd(BuildContext context, {int freq = 0}) async {
-    if(_apps.isEmpty){
+    if (_apps.isEmpty) {
       customPrint("No app ads has been set, will do nothing");
       return;
     }
+    final ad = _selectAdToShow();
 
-    await showDialog(builder: (BuildContext context) {
-      return SimpleDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)
-        ),
-        clipBehavior: Clip.antiAlias,
-        titlePadding: const EdgeInsets.all(0),
-        title: Column(
-          children: [
-            Image.network(_apps[0].image_link, width: MediaQuery.of(context).size.width,),
-            Text("This is a card 2"),
-          ],
-        ),
-      );
-    }, context: context);
+    await showDialog(
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            clipBehavior: Clip.antiAlias,
+            titlePadding: const EdgeInsets.all(0),
+            title: Column(
+              children: [
+                Image.network(
+                  ad.image_link,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    ad.description,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.comicNeue(
+                        fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+        context: context);
   }
 
   //region Helper methods
-
-
 
   bool canShowAd(int freq) {
     var counter = (_prefs.getInt(_lsKey.lastShownAd.toKeyString()) ?? 0) + 1;
@@ -112,8 +124,11 @@ class FlutterAppPopupAd {
     print("FlutterAppPopupAd - $message");
   }
 
-  // AppInfo selectAppAdToShow(){
-  //
-  // }
+  AppInfo _selectAdToShow() {
+    var lastApp = _prefs.getInt(_lsKey.apps.toKeyString()) ?? 0;
+    lastApp = lastApp >= _apps.length ? 0 : lastApp;
+    _prefs.setInt(_lsKey.apps.toKeyString(), lastApp);
+    return _apps[lastApp];
+  }
 //endregion
 }

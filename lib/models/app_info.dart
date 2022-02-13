@@ -12,11 +12,15 @@ class AppInfo {
   final String name;
   final String description;
   final String image_link;
+  final String android_id;
+  final String ios_id;
 
-  // final String android_id;
-  // final String ios_id;
-
-  AppInfo(this.name, this.description, this.image_link);
+  AppInfo(
+      {required this.name,
+      required this.description,
+      required this.image_link,
+      required this.android_id,
+      required this.ios_id});
 
   factory AppInfo.fromJson(Map<String, dynamic> json) =>
       _$AppInfoFromJson(json);

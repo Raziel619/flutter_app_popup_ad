@@ -3,6 +3,7 @@
 library flutter_app_popup_ad;
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,6 +136,7 @@ class FlutterAppPopupAd {
   }
 
   Widget downloadBtn(AppInfo app){
+    //final appId = Platform.isAndroid ? app.
     return NiceButtons(
       startColor: Color(0xFFF00B51),
       endColor: Color(0xFF780061),

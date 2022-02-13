@@ -65,8 +65,8 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
 
       flutterAppPopupAd.thisAppId = "id";
-      flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
-      flutterAppPopupAd.determineAndShowAd(context);
+      await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
+      await flutterAppPopupAd.determineAndShowAd(context);
     });
   }
 

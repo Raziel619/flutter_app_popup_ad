@@ -5,6 +5,7 @@ library flutter_app_popup_ad;
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -85,9 +86,8 @@ class FlutterAppPopupAd {
             titlePadding: const EdgeInsets.all(0),
             title: Column(
               children: [
-                Image.network(
-                  ad.image_link,
-                  width: MediaQuery.of(context).size.width,
+                CachedNetworkImage(
+                  imageUrl: ad.image_link,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),

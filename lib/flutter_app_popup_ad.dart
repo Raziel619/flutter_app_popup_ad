@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:nice_buttons/nice_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/app_info.dart';
@@ -96,12 +97,71 @@ class FlutterAppPopupAd {
                         fontWeight: FontWeight.bold, fontSize: 22),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: downloadBtn(ad),
+                ),
               ],
             ),
           );
         },
         context: context);
   }
+
+  //region Widgets
+
+  Widget openBtn(AppInfo app){
+    return NiceButtons(
+      stretch: true,
+      gradientOrientation: GradientOrientation.Horizontal,
+      onTap: (finish) {
+        print('On tap called');
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: const [
+            Icon(Icons.open_in_new, color: Colors.white, size: 32),
+            Expanded(child: SizedBox.shrink(),),
+            Text(
+              'Open',
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+            Expanded(child: SizedBox.shrink(),),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget downloadBtn(AppInfo app){
+    return NiceButtons(
+      startColor: Color(0xFFF00B51),
+      endColor: Color(0xFF780061),
+      borderColor: Color(0xFF780061),
+      stretch: true,
+      gradientOrientation: GradientOrientation.Horizontal,
+      onTap: (finish) {
+        print('On tap called');
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(
+          children: const [
+            Icon(Icons.download, color: Colors.white, size: 32),
+            Expanded(child: SizedBox.shrink(),),
+            Text(
+              'Download',
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+            Expanded(child: SizedBox.shrink(),),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //endregion
 
   //region Helper methods
 
@@ -125,9 +185,9 @@ class FlutterAppPopupAd {
   }
 
   AppInfo _selectAdToShow() {
-    var lastApp = _prefs.getInt(_lsKey.apps.toKeyString()) ?? 0;
+    var lastApp = _prefs.getInt(_lsKey.lastShownAd.toKeyString()) ?? 0;
     lastApp = lastApp >= _apps.length ? 0 : lastApp;
-    _prefs.setInt(_lsKey.apps.toKeyString(), lastApp);
+    _prefs.setInt(_lsKey.lastShownAd.toKeyString(), lastApp + 1);
     return _apps[lastApp];
   }
 //endregion

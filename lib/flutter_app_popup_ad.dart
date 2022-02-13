@@ -186,7 +186,7 @@ class FlutterAppPopupAd {
 
   AppInfo _selectAdToShow() {
     var lastApp = _prefs.getInt(_lsKey.lastShownAd.toKeyString()) ?? 0;
-    lastApp = lastApp >= _apps.length ? 0 : lastApp;
+    lastApp = (lastApp >= _apps.length) ? 0 : lastApp;
     _prefs.setInt(_lsKey.lastShownAd.toKeyString(), lastApp + 1);
     return _apps[lastApp];
   }

@@ -73,6 +73,7 @@ class FlutterAppPopupAd {
   //endregion
 
   Future<void> determineAndShowAd(BuildContext context, {int freq = 0}) async {
+    // validations
     if (_apps.isEmpty) {
       customPrint("No app ads has been set, will do nothing");
       return;
@@ -82,8 +83,13 @@ class FlutterAppPopupAd {
       customPrint("Invalid ios_link, will do nothing");
       return;
     }
+    if(ad.android_id == thisAppId){
+      customPrint("Package name is the same as thisAppId, will do nothing");
+      return;
+    }
     final _isAppInstalled = await FlutterAppPopupAd.isAppInstalled(ad);
 
+    // popping dialog
     await showDialog(
         builder: (BuildContext context) {
           return SimpleDialog(

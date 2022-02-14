@@ -122,7 +122,7 @@ class FlutterAppPopupAd {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  child: _isAppInstalled ? openBtn(ad) : downloadBtn(ad),
+                  child: _isAppInstalled ? _openBtn(ad) : _downloadBtn(ad),
                 ),
               ],
             ),
@@ -133,7 +133,7 @@ class FlutterAppPopupAd {
 
   //region Widgets
 
-  Widget openBtn(AppInfo app) {
+  Widget _openBtn(AppInfo app) {
     return NiceButtons(
       stretch: true,
       gradientOrientation: GradientOrientation.Horizontal,
@@ -165,7 +165,7 @@ class FlutterAppPopupAd {
     );
   }
 
-  Widget downloadBtn(AppInfo app) {
+  Widget _downloadBtn(AppInfo app) {
     return NiceButtons(
       startColor: const Color(0xFFF00B51),
       endColor: const Color(0xFF780061),

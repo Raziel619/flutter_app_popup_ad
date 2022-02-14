@@ -1,39 +1,53 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Flutter_App_Popup_Ad
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+A Flutter plugin for app developers to advertise their own apps (or others) in in the form of a dialog/popup.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Android             | iOS 
+:-------------------------:|:-------------------------:
+![](docs/android_screenshot.png) |  ![](docs/ios_screenshot.png)
 
-## Features
+## Install
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+In a terminal of your flutter project, run the command:
 
-## Getting started
+``` dart	
+flutter pub add flutter_app_popup_ad
+```
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+In your library add the following import:
+
+``` dart
+import 'package:flutter_app_popup_ad/flutter_app_popup_ad.dart';
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+This package requires a list of apps that you will like to advertise. You will need to initialize the package with a `List<AppInfo>` or a public url that the package can fetch from. You can find a code example below
 
-```dart
-const like = 'sample';
+```dart 
+@override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      // set this if the host app is in the list of apps to advertise
+      // prevents it from advertising itself
+      flutterAppPopupAd.thisAppId = "om.Raziel619";
+      
+      await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews', updateFreqDays: 1);
+      // or you can use flutterAppPopupAd.initializeWithApps(apps)
+      
+      await flutterAppPopupAd.determineAndShowAd(context, freq: 0);
+    });
+  }
 ```
 
-## Additional information
+- `updateFreqDays` - sets the time interval that `initializeWithUrl` will fetch list of apps from url
+- `freq` - sets the number of times the app must be opened to show the next ad. If set to 0, an ad will be shown everytime the `determineAndShowAd` method is called
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Suggested approach is to call the package after your `main.dart` has returned a MaterialApp so that flutter's `showDialog` method can work.
+
+## Limitations
+
+Currently, this package only fully supports Android. For iOS, you can pass in a URL link to the app's page on the Apple app store and the package will direct users to there.
+

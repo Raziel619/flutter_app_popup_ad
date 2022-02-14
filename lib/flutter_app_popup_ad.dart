@@ -38,6 +38,9 @@ class FlutterAppPopupAd {
 
   //region Initializers
 
+  /// Fetches a list of apps to be advertised from the URL (Get), set updateFreqDays to limit the
+  /// http calls. Ensure that the response matches the AppInfo model otherwise this will fail.
+  /// Alternative is to use initializeWithApps if you would like the pass the data in directly
   Future<void> initializeWithUrl(String url, {int updateFreqDays = 1}) async {
     customPrint("Initializing");
     try {
@@ -63,6 +66,8 @@ class FlutterAppPopupAd {
     }
   }
 
+  /// Initializes the package with a list of apps that you would like to advertise
+  /// Alternative is to use initializeWithUrl if you wish to fetch app via a public URL
   void initializeWithApps(List<AppInfo> apps) async {
     customPrint("Initializing");
     _prefs = await SharedPreferences.getInstance();
@@ -72,6 +77,9 @@ class FlutterAppPopupAd {
 
   //endregion
 
+  /// Determines the next app ad to be shown and shows it via a showDialog
+  /// `freq` - sets the number of times the app must be opened to show the next ad.
+  /// If set to 0, an ad will be shown everytime the `determineAndShowAd` method is called
   Future<void> determineAndShowAd(BuildContext context, {int freq = 0}) async {
     // validations
     if (_apps.isEmpty) {

@@ -63,10 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      // set this if the host app is in the list of apps to advertise, prevents it from advertising itself
+      flutterAppPopupAd.thisAppId = "om.Raziel619";
 
-      flutterAppPopupAd.thisAppId = "id";
-      await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews');
-      await flutterAppPopupAd.determineAndShowAd(context);
+      await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews', updateFreqDays: 1);
+      // or you can use flutterAppPopupAd.initializeWithApps(apps)
+
+      await flutterAppPopupAd.determineAndShowAd(context, freq: 0);
     });
   }
 

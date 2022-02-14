@@ -5,7 +5,7 @@ A Flutter plugin for app developers to advertise their own apps (or others) in i
 
 Android             | iOS 
 :-------------------------:|:-------------------------:
-![](doc/android_screenshot.png) |  ![](doc/ios_screenshot.png)
+![](https://raw.githubusercontent.com/Raziel619/flutter_app_popup_ad/master/doc/android_screenshot.png) | ![](https://raw.githubusercontent.com/Raziel619/flutter_app_popup_ad/master/doc/ios_screenshot.png) 
 
 ## Install
 

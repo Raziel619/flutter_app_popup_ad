@@ -1,7 +1,7 @@
 name: flutter_app_popup_ad
 description: A Flutter package to advertise apps in the form of a dialog
-version: 0.0.1
-homepage: https://www.raziel619.com/
+version: 0.0.2
+homepage: https://github.com/Raziel619/flutter_app_popup_ad
 
 environment:
   sdk: ">=2.16.0 <3.0.0"

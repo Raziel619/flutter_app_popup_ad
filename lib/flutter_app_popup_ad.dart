@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:nice_buttons/nice_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'models/app_info.dart';
 
@@ -77,6 +78,10 @@ class FlutterAppPopupAd {
       return;
     }
     final ad = _selectAdToShow();
+    if(Platform.isIOS && ad.ios_link.isEmpty){
+      customPrint("Invalid ios_link, will do nothing");
+      return;
+    }
     final _isAppInstalled = await FlutterAppPopupAd.isAppInstalled(ad);
 
     await showDialog(
@@ -115,12 +120,15 @@ class FlutterAppPopupAd {
   //region Widgets
 
   Widget openBtn(AppInfo app) {
-    final appId = Platform.isAndroid ? app.android_id : app.ios_id;
     return NiceButtons(
       stretch: true,
       gradientOrientation: GradientOrientation.Horizontal,
       onTap: (finish) async {
-        await LaunchApp.openApp(androidPackageName: app.android_id);
+        if (Platform.isAndroid) {
+          await LaunchApp.openApp(androidPackageName: app.android_id);
+        } else if (Platform.isIOS) {
+          await launch(app.ios_link);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -144,15 +152,18 @@ class FlutterAppPopupAd {
   }
 
   Widget downloadBtn(AppInfo app) {
-    final appId = Platform.isAndroid ? app.android_id : app.ios_id;
     return NiceButtons(
-      startColor: Color(0xFFF00B51),
-      endColor: Color(0xFF780061),
-      borderColor: Color(0xFF780061),
+      startColor: const Color(0xFFF00B51),
+      endColor: const Color(0xFF780061),
+      borderColor: const Color(0xFF780061),
       stretch: true,
       gradientOrientation: GradientOrientation.Horizontal,
       onTap: (finish) async {
-        await LaunchApp.openApp(androidPackageName: app.android_id);
+        if (Platform.isAndroid) {
+          await LaunchApp.openApp(androidPackageName: app.android_id);
+        } else if (Platform.isIOS) {
+          await launch(app.ios_link);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -202,7 +213,7 @@ class FlutterAppPopupAd {
     if (Platform.isAndroid) {
       return await LaunchApp.isAppInstalled(androidPackageName: app.android_id);
     } else if (Platform.isIOS) {
-      return false;
+      return true;
     } else {
       return false;
     }

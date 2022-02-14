@@ -13,14 +13,14 @@ class AppInfo {
   final String description;
   final String image_link;
   final String android_id;
-  final String ios_id;
+  final String ios_link;
 
   AppInfo(
       {required this.name,
       required this.description,
       required this.image_link,
       required this.android_id,
-      required this.ios_id});
+      this.ios_link = ''});
 
   factory AppInfo.fromJson(Map<String, dynamic> json) =>
       _$AppInfoFromJson(json);

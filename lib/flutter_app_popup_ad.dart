@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -76,6 +77,7 @@ class FlutterAppPopupAd {
       return;
     }
     final ad = _selectAdToShow();
+    final _isAppInstalled = await FlutterAppPopupAd.isAppInstalled(ad);
 
     await showDialog(
         builder: (BuildContext context) {
@@ -99,8 +101,9 @@ class FlutterAppPopupAd {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  child: downloadBtn(ad),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  child: _isAppInstalled ? openBtn(ad) : downloadBtn(ad),
                 ),
               ],
             ),
@@ -111,52 +114,61 @@ class FlutterAppPopupAd {
 
   //region Widgets
 
-  Widget openBtn(AppInfo app){
+  Widget openBtn(AppInfo app) {
+    final appId = Platform.isAndroid ? app.android_id : app.ios_id;
     return NiceButtons(
       stretch: true,
       gradientOrientation: GradientOrientation.Horizontal,
-      onTap: (finish) {
-        print('On tap called');
+      onTap: (finish) async {
+        await LaunchApp.openApp(androidPackageName: app.android_id);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: const [
             Icon(Icons.open_in_new, color: Colors.white, size: 32),
-            Expanded(child: SizedBox.shrink(),),
+            Expanded(
+              child: SizedBox.shrink(),
+            ),
             Text(
               'Open',
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
-            Expanded(child: SizedBox.shrink(),),
+            Expanded(
+              child: SizedBox.shrink(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget downloadBtn(AppInfo app){
-    //final appId = Platform.isAndroid ? app.
+  Widget downloadBtn(AppInfo app) {
+    final appId = Platform.isAndroid ? app.android_id : app.ios_id;
     return NiceButtons(
       startColor: Color(0xFFF00B51),
       endColor: Color(0xFF780061),
       borderColor: Color(0xFF780061),
       stretch: true,
       gradientOrientation: GradientOrientation.Horizontal,
-      onTap: (finish) {
-        print('On tap called');
+      onTap: (finish) async {
+        await LaunchApp.openApp(androidPackageName: app.android_id);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: const [
             Icon(Icons.download, color: Colors.white, size: 32),
-            Expanded(child: SizedBox.shrink(),),
+            Expanded(
+              child: SizedBox.shrink(),
+            ),
             Text(
               'Download',
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
-            Expanded(child: SizedBox.shrink(),),
+            Expanded(
+              child: SizedBox.shrink(),
+            ),
           ],
         ),
       ),
@@ -184,6 +196,16 @@ class FlutterAppPopupAd {
 
   void customPrint(String message) {
     print("FlutterAppPopupAd - $message");
+  }
+
+  static Future<bool> isAppInstalled(AppInfo app) async {
+    if (Platform.isAndroid) {
+      return await LaunchApp.isAppInstalled(androidPackageName: app.android_id);
+    } else if (Platform.isIOS) {
+      return false;
+    } else {
+      return false;
+    }
   }
 
   AppInfo _selectAdToShow() {

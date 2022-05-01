@@ -1,3 +1,6 @@
+## 0.0.4
+* Fixed issue with frequency counter
+
 ## 0.0.3
 * Resolve static analysis issues
 

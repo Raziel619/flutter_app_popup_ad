@@ -18,6 +18,7 @@ import 'models/app_info.dart';
 
 enum _lsKey {
   apps,
+  freqCounter,
   lastUpdated,
   lastShownAd,
 }
@@ -82,6 +83,9 @@ class FlutterAppPopupAd {
   /// If set to 0, an ad will be shown everytime the `determineAndShowAd` method is called
   Future<void> determineAndShowAd(BuildContext context, {int freq = 0}) async {
     // validations
+    if (!canShowAd(freq)){
+      return;
+    }
     if (_apps.isEmpty) {
       customPrint("No app ads has been set, will do nothing");
       return;
@@ -205,8 +209,13 @@ class FlutterAppPopupAd {
   //region Helper methods
 
   bool canShowAd(int freq) {
-    var counter = (_prefs.getInt(_lsKey.lastShownAd.toKeyString()) ?? 0) + 1;
-    return counter >= freq;
+    var counter = (_prefs.getInt(_lsKey.freqCounter.toKeyString()) ?? 0) + 1;
+    if (counter >= freq){
+      _prefs.setInt(_lsKey.freqCounter.toKeyString(), 0);
+      return true;
+    }
+    _prefs.setInt(_lsKey.freqCounter.toKeyString(), counter);
+    return false;
   }
 
   bool canUpdateAds(int updateFreqDays) {

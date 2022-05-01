@@ -32,6 +32,7 @@ This package requires a list of apps that you will like to advertise. You will n
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       // set this if the host app is in the list of apps to advertise
       // prevents it from advertising itself
+      final flutterAppPopupAd = FlutterAppPopupAd();
       flutterAppPopupAd.thisAppId = "om.Raziel619";
       
       await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews', updateFreqDays: 1);

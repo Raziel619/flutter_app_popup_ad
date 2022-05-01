@@ -69,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
       await flutterAppPopupAd.initializeWithUrl('https://dev.raziel619.com/ariel/api/getpreviews', updateFreqDays: 1);
       // or you can use flutterAppPopupAd.initializeWithApps(apps)
 
-      await flutterAppPopupAd.determineAndShowAd(context, freq: 0);
+      await flutterAppPopupAd.determineAndShowAd(context, freq: 3);
     });
   }
 
@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
-      flutterAppPopupAd.determineAndShowAd(context);
+      flutterAppPopupAd.determineAndShowAd(context, freq: 3);
     });
   }
 

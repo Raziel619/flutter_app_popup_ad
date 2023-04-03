@@ -99,7 +99,7 @@ class FlutterAppPopupAd {
       customPrint("Package name is the same as thisAppId, will do nothing");
       return;
     }
-    final _isAppInstalled = await FlutterAppPopupAd.isAppInstalled(ad);
+    final isAppInstalled = await FlutterAppPopupAd.isAppInstalled(ad);
 
     // popping dialog
     await showDialog(
@@ -126,7 +126,7 @@ class FlutterAppPopupAd {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  child: _isAppInstalled ? _openBtn(ad) : _downloadBtn(ad),
+                  child: isAppInstalled ? _openBtn(ad) : _downloadBtn(ad),
                 ),
               ],
             ),
@@ -145,7 +145,7 @@ class FlutterAppPopupAd {
         if (Platform.isAndroid) {
           await LaunchApp.openApp(androidPackageName: app.android_id);
         } else if (Platform.isIOS) {
-          await launch(app.ios_link);
+          await launchUrl(Uri.parse(app.ios_link));
         }
       },
       child: Padding(
@@ -180,7 +180,7 @@ class FlutterAppPopupAd {
         if (Platform.isAndroid) {
           await LaunchApp.openApp(androidPackageName: app.android_id);
         } else if (Platform.isIOS) {
-          await launch(app.ios_link);
+          await launchUrl(Uri.parse(app.ios_link));
         }
       },
       child: Padding(

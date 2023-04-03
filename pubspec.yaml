@@ -1,19 +1,18 @@
 name: flutter_app_popup_ad
 description: A Flutter plugin for app developers to advertise their own apps (or others) in in the form of a dialog/popup.
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/Raziel619/flutter_app_popup_ad
 issue_tracker: https://github.com/Raziel619/flutter_app_popup_ad/issues
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
   cached_network_image: ^3.2.0
-  external_app_launcher: ^2.0.2
+  external_app_launcher: ^3.1.0
   flutter:
     sdk: flutter
-  google_fonts: ^2.3.1
+  google_fonts: ^4.0.3
   http: ^0.13.4
   json_annotation: ^4.4.0
   nice_buttons: ^0.0.2
@@ -23,9 +22,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   json_serializable: ^6.0.0
-  build_runner: ^2.1.7
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
